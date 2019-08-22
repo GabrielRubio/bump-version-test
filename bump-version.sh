@@ -29,12 +29,12 @@ yarn version --new-version $version
 echo "|"
 echo "Mergin with master!"
 git checkout master
-git merge --no-ff release-$version
+git merge --no-ff release-$version -m "Merge branch 'release-$version'"
 
 echo "|"
 echo "Mergin with develop!"
 git checkout develop
-git merge --no-ff release-$version
+git merge --no-ff release-$version -m "Merge branch 'release-$version'"
 
 echo "|"
 echo "Removign release branch!"
