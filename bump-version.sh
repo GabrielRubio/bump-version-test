@@ -25,16 +25,23 @@ echo "|"
 echo "Bump Version with yarn!"
 yarn version --new-version $version
 
+echo "|"
+read -p "Continue merge in develop and master? [y/n] " isMerge
+
+if test $isMerge != 'y'
+then
+    exit 1
+fi
 
 echo "|"
 echo "Mergin with master!"
 git checkout master
-git merge --no-ff release-$version
+git merge --no-ff release-$version -m "Merge branch 'release-$version'"
 
 echo "|"
 echo "Mergin with develop!"
 git checkout develop
-git merge --no-ff release-$version
+git merge --no-ff release-$version -m "Merge branch 'release-$version'"
 
 echo "|"
 echo "Removign release branch!"
@@ -42,6 +49,6 @@ git branch -d release-$version
 
 echo "|"
 echo "Pushing to origin!"
-# git push origin develop
-# git push origin master
-# git push --tags
+git push origin develop -q
+git push origin master -q
+git push --tags
